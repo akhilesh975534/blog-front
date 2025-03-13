@@ -1,13 +1,14 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Index from "./views/Index";
-import Login from "./views/Login/Index";
-import Signup from "./views/Signup/Index";
-import Home from "./views/Post/Index";
+import Index from "./views/Index.jsx";
+import Login from "./views/Login/Index.jsx";
+import Signup from "./views/Signup/Index.jsx";
+import Home from "./views/Post/Index.jsx";
 import CreateBlog from "./views/Post/create.jsx";
-import EditBlog from "./views/Post/edit";
+import EditBlog from "./views/Post/edit.jsx";
 import About from "./views/About/index.jsx";
 import Contact from "./views/Contact/Index.jsx";
+import ShowBlog from "./views/Post/show.jsx";
 
 export const routes = createBrowserRouter([
   {
@@ -27,16 +28,20 @@ export const routes = createBrowserRouter([
         element: <Signup />,
       },
       {
-        path: "/user/index",
+        path: "/index",
         element: <Home />,
       },
       {
-        path: "/user/create-blog",
+        path: "/create-blog",
         element: <CreateBlog />,
       },
       {
-        path: "/user/edit-blog",
+        path: "/blog/edit-blog/:id",
         element: <EditBlog />,
+      },
+      {
+        path: "/blog/:id",
+        element : <ShowBlog />
       },
       {
         path: "/about",
