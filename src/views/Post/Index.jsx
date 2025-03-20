@@ -4,6 +4,7 @@ import { BsPencilSquare } from "react-icons/bs";
 import { FaPlus, FaRegEye } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const BaseUrl = process.env.REACT_APP_API_URL;
 // console.log(BaseUrl, "++++++++++");
 
@@ -27,11 +28,32 @@ const Home = () => {
   };
 
   const handleDelete = async (id) => {
-    await axios.delete(BaseUrl + "/api/v1/blogs/" + id).then((result) => {
-      console.log(result,"+++++++++++++")
-    }).catch((error) => {
-      console.log(error,"error++++++++++++")
-    })
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (result.isConfirmed) {
+      await axios
+        .delete(BaseUrl + "/api/v1/blogs/" + id)
+        .then((result) => {
+          if (result) {
+            console.log(result, "++++++++++++++");
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error, "++++++++++++++++");
+        });
+    }
   };
 
   useEffect(() => {
