@@ -18,7 +18,7 @@ function Navbar() {
             </Link>
           </li>
           <li className="mx-3">
-            <Link className="text-white no-underline" to="/user/create-blog">
+            <Link className="text-white no-underline" to="/create-blog">
               Create Blog
             </Link>
           </li>
