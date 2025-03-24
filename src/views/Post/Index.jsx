@@ -1,10 +1,10 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BsPencilSquare } from "react-icons/bs";
 import { FaPlus, FaRegEye } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import blogModel from "../../model/blog.model";
 const BaseUrl = process.env.REACT_APP_API_URL;
 // console.log(BaseUrl, "++++++++++");
 
@@ -14,8 +14,8 @@ const Home = () => {
   const navigate = useNavigate();
 
   const getBlogData = async () => {
-    await axios
-      .get(BaseUrl + "/api/v1/blogs")
+    await blogModel
+      .getPostData()
       .then((result) => {
         if (result) {
           // console.log(result,"++++++++++++")
@@ -38,8 +38,8 @@ const Home = () => {
       confirmButtonText: "Yes, delete it!",
     });
     if (result.isConfirmed) {
-      await axios
-        .delete(BaseUrl + "/api/v1/blogs/" + id)
+      await blogModel
+        .deletePost(id)
         .then((result) => {
           if (result) {
             console.log(result, "++++++++++++++");

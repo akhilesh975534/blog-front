@@ -1,42 +1,43 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import Swal from "sweetalert2";
-const baseUrl = process.env.REACT_APP_API_URL;
+import blogModel from "../../model/blog.model";
+import { useNavigate } from "react-router-dom";
 
 function CreateBlog() {
-  const [formData, setFormData] = useState({
-    title: "",
-    des: "",
-  });
-  const [blogs, setBlogs] = useState([]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const navigate = useNavigate()
 
   const handleAddBlog = async (e) => {
     e.preventDefault();
-    console.log(formData, "++++++++++++++++");
-    await axios
-      .post(baseUrl + "/api/v1/blogs/create-blog", formData)
-      .then((res) => {
-        if (res) {
-          console.log(res, "res++++++++++++");
-          Swal.fire({
-            icon: "success",
-            title: "Success",
-            text: res?.data?.message
+    const formData = new FormData(e.target);
+    try {
+      if (e.target.title.value !== "" && e.target.des.value !== "") {
+        await blogModel
+          .createPost(formData)
+          .then((res) => {
+            if (res) {
+              // console.log(res, "res++++++++++++");
+              Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: res?.data?.message,
+              });
+              navigate(-1)
+            }
+          })
+          .catch((error) => {
+            console.log(error, "error++++++++++++++++");
+            Swal.fire({
+              icon: "error",
+              title: "Error",
+              text: error?.response?.data?.message,
+            });
           });
-        }
-      })
-      .catch((error) => {
-        console.log(error, "error++++++++++++++++");
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: error?.response?.data?.message
-        });
-      });
+      } else {
+        console.log("Required all fields");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,7 +54,6 @@ function CreateBlog() {
                 type="text"
                 className="p-1 rounded-lg outline-none w-full"
                 name="title"
-                onChange={handleChange}
               />
             </div>
             <div className="grid w-full">
@@ -61,7 +61,6 @@ function CreateBlog() {
               <textarea
                 className="p-1 rounded-lg outline-none w-full"
                 name="des"
-                onChange={handleChange}
               ></textarea>
             </div>
             <div className="my-2">

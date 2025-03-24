@@ -12,11 +12,11 @@ const axiosInstense = axios.create({
     return data;
   },
   validateStatus: function (status) {
-    if (window.location.pathname !== "/login") {
-      if (status == 403) {
-        window.location.pathname("/login");
+    if (window.location.pathname != "/login") {
+      if (status == 401) {
+        window.location.assign("/login");
       }
-      if (status == 400) {
+      if (status == 404) {
         console.log("400 error");
       }
     }
