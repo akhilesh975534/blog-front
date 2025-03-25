@@ -73,7 +73,7 @@ const Home = () => {
         </button>
       </div>
       <div className="space-y-4 w-full">
-        {posts?.map((post) => (
+        {posts.length === 0 ? <h1>No Post</h1> :  posts?.map((post) => (
           <div
             key={post._id}
             className="p-4 border rounded-lg shadow flex justify-between"

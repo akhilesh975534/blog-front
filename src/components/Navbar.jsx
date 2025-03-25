@@ -5,6 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 function Navbar() {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    sessionStorage.clear()
+    navigate("/login")
+  }
+
   return (
     <div className="flex justify-between items-center bg-zinc-700 text-white px-4 py-3">
       <div>
@@ -13,7 +18,7 @@ function Navbar() {
       <div className="">
         <ul className="md:flex md:justify-between hidden">
           <li className="mx-3">
-            <Link className="text-white no-underline" to="/">
+            <Link className="text-white no-underline" to="/index">
               Home
             </Link>
           </li>
@@ -37,15 +42,9 @@ function Navbar() {
       <div className="md:flex md:justify-between hidden">
         <button
           className="mx-2 bg-green-800 hover:bg-green-700 py-1 px-3 rounded-lg hover:text-black"
-          onClick={() => navigate("/login")}
+          onClick={() => handleLogout()}
         >
-          Login
-        </button>
-        <button
-          className="mx-2 bg-red-800 hover:bg-red-700 py-1 px-3 rounded-lg"
-          onClick={() => navigate("/signup")}
-        >
-          SignUp
+          Logout
         </button>
       </div>
       <div className="md:hidden">

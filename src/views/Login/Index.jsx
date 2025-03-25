@@ -1,32 +1,34 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authModel from "../../model/auth.model";
+import helper from "../../lib/helper";
 
 function Login() {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target)
+    const formData = new FormData(e.target);
     if (e.target.email.value !== "" && e.target.password.value !== "") {
       await authModel
         .loginUser(formData)
         .then((result) => {
           if (result) {
-            console.log(result, "result++++++++++++");
             sessionStorage.setItem("token", result?.data?.token);
             sessionStorage.setItem(
               "userInfo",
               JSON.stringify(result?.data?.user)
             );
+            helper.toast("success", result?.data?.message)
             navigate("/index");
           }
         })
         .catch((error) => {
-          console.log(error, "++++++++++++++++");
+          helper.toast("error", error?.response?.data?.message)
+          // console.log(error, "++++++++++++++++");
         });
-    } else {
-      console.log("Enter Email and passwords");
+      } else {
+      helper.toast("error", "Enter Email and passwords");
     }
   };
 

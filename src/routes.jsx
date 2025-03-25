@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App";
 import Index from "./views/Index.jsx";
 import Login from "./views/Login/Index.jsx";
@@ -17,7 +17,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Index />,
+        element: <Navigate to="/login" replace />,
       },
       {
         path: "/login",
@@ -41,7 +41,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/blog/:id",
-        element : <ShowBlog />
+        element: <ShowBlog />,
       },
       {
         path: "/about",
