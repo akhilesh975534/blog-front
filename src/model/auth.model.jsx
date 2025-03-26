@@ -5,6 +5,10 @@ class authModel {
         console.log(data,"data+++++++++++++++")
         return await axiosInstense.post("/api/v1/users/login", data)
     }
+
+    async signupUser(data) {
+        return await axiosInstense.post("/api/v1/users/create-user", data)
+    }
 }
 
 export default new authModel()

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 function CreateBlog() {
   const navigate = useNavigate()
 
-  const handleAddBlog = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     try {
@@ -41,40 +41,36 @@ function CreateBlog() {
   };
 
   return (
-    <div className="flex justify-center items-center h-[80vh]">
-      <div className=" p-3 rounded-lg bg-blue-300 w-fit">
-        <div className="grid w-fit ">
-          <h1 className="text-2xl font-bold pb-3 text-center border-b-2">
-            Create a Blog
-          </h1>
-          <form onSubmit={handleAddBlog}>
-            <div className="grid w-full">
-              <label className="my-2 font-bold">Enter Your Title</label>
-              <input
-                type="text"
-                className="p-1 rounded-lg outline-none w-full"
-                name="title"
-              />
-            </div>
-            <div className="grid w-full">
-              <label className="my-2 font-bold">Enter Your Content</label>
-              <textarea
-                className="p-1 rounded-lg outline-none w-full"
-                name="des"
-              ></textarea>
-            </div>
-            <div className="my-2">
-              <button
-                type="submit"
-                className="bg-green-700 hover:bg-green-800 rounded-lg w-full py-1"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+      <h2 className="text-2xl font-bold text-center mb-4">Create Blog</h2>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium">Title</label>
+          <input
+            type="text"
+            name="title"
+            className="w-full p-2 border rounded mt-1"
+            required
+          />
         </div>
-      </div>
+        <div>
+          <label className="block text-sm font-medium">Description</label>
+          <textarea
+            name="des"
+            className="w-full p-2 border rounded mt-1"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        >
+          Submit
+        </button>
+      </form>
     </div>
+  </div>
   );
 }
 

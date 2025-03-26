@@ -1,26 +1,22 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-const BaseUrl = process.env.REACT_APP_API_URL;
+import blogModel from "../../model/blog.model";
+import helper from "../../lib/helper";
 
 function EditBlog() {
   const { id } = useParams();
   const navigate = useNavigate();
-  console.log(id);
-  const [formData, setFormData] = useState({
-    title: "",
-    des: "",
-  });
+  const [formData, setFormData] = useState([]);
 
-  console.log(formData,"formdata++++++++++++")
+  console.log(formData, "formData--------------");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const getBlogData = async () => {
-    await axios
-      .get(BaseUrl + "/api/v1/blogs/" + id)
+    await blogModel
+      .specificPost(id)
       .then((result) => {
         if (result) {
           setFormData(result?.data?.blog);
@@ -33,17 +29,23 @@ function EditBlog() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .put(BaseUrl + "/api/v1/blogs/update-blog/" + id, formData)
-      .then((result) => {
-        if (result) {
-          console.log(result, "++++++++++++");
-          navigate(-1);
-        }
-      })
-      .catch((error) => {
-        console.log(error, "error++++++++++++++");
-      });
+    if (e.target.title.value !== "" && e.target.des.value !== "") {
+      await blogModel
+        .updatePost(JSON.stringify(formData), id)
+        .then((result) => {
+          if (result) {
+            console.log(result, "++++++++++++");
+            helper.toast("success", result?.data?.message);
+            navigate(-1);
+          }
+        })
+        .catch((error) => {
+          console.log(error, "error++++++++++++++");
+          helper.toast("error", error?.response?.data?.message);
+        });
+    } else {
+      helper.toast("error", "All fields are required");
+    }
   };
 
   useEffect(() => {
@@ -60,8 +62,8 @@ function EditBlog() {
           </label>
           <input
             type="text"
-            value={formData?.title}
             name="title"
+            value={formData?.title}
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1"
           />
@@ -71,8 +73,8 @@ function EditBlog() {
             Content
           </label>
           <textarea
-            value={formData?.des}
             name="des"
+            value={formData?.des}
             onChange={handleChange}
             className="w-full p-2 border rounded mt-1 h-40"
           />
