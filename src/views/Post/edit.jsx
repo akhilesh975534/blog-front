@@ -6,7 +6,7 @@ import helper from "../../lib/helper";
 function EditBlog() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState({});
 
   console.log(formData, "formData--------------");
 
@@ -31,7 +31,7 @@ function EditBlog() {
     e.preventDefault();
     if (e.target.title.value !== "" && e.target.des.value !== "") {
       await blogModel
-        .updatePost(JSON.stringify(formData), id)
+        .updatePost(formData, id)
         .then((result) => {
           if (result) {
             console.log(result, "++++++++++++");

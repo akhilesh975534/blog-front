@@ -9,6 +9,7 @@ import EditBlog from "./views/Post/edit.jsx";
 import About from "./views/About/index.jsx";
 import Contact from "./views/Contact/Index.jsx";
 import ShowBlog from "./views/Post/show.jsx";
+import ProfileEdit from "./views/Profile/Index.jsx";
 
 export const routes = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ export const routes = createBrowserRouter([
         path: "/contact",
         element: <Contact />,
       },
+      {
+        path: "/profile",
+        element: <ProfileEdit />
+      }
     ],
   },
 ]);

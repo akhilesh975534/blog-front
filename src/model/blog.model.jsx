@@ -14,8 +14,6 @@ class blogModel {
   }
 
   async updatePost(data, id) {
-    // console.log(id,"------------------")
-    // console.log(data,"+++++++++++++++")
     return await axiosInstense.put("/api/v1/blogs/update-blog/" + id, data);
   }
 

@@ -4,11 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
+  const userinfo = sessionStorage.getItem("userInfo");
+  const user = JSON.parse(userinfo);
+  console.log(user,"user++++++++++")
 
   const handleLogout = () => {
-    sessionStorage.clear()
-    navigate("/login")
-  }
+    sessionStorage.clear();
+    navigate("/login");
+  };
 
   return (
     <div className="flex justify-between items-center bg-zinc-700 text-white px-4 py-3">
@@ -39,13 +42,34 @@ function Navbar() {
           </li>
         </ul>
       </div>
-      <div className="md:flex md:justify-between hidden">
-        <button
-          className="mx-2 bg-green-800 hover:bg-green-700 py-1 px-3 rounded-lg hover:text-black"
-          onClick={() => handleLogout()}
+      <div className="dropdown">
+        <div
+          className="flex justify-start items-center space-x-3 bg-[lightgray] text-black rounded-lg px-4 py-1 dropdown-toggle"
+          data-bs-toggle="dropdown"
         >
-          Logout
-        </button>
+          <span className="bi bi-person-circle"></span>
+          <p className="text-lg">{user.username}</p>
+        </div>
+        <ul class="dropdown-menu">
+          <li>
+            <button class="dropdown-item" onClick={() => navigate("/profile")}>
+              Profile
+            </button>
+          </li>
+          <li>
+            <button
+              class="dropdown-item"
+              onClick={() => navigate("/forget-password")}
+            >
+              Forget Password
+            </button>
+          </li>
+          <li>
+            <button class="dropdown-item" onClick={handleLogout}>
+              Logout
+            </button>
+          </li>
+        </ul>
       </div>
       <div className="md:hidden">
         <FaListAlt className="text-3xl" />

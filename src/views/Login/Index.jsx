@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import authModel from "../../model/auth.model";
 import helper from "../../lib/helper";
 
 function Login() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
     if (e.target.email.value !== "" && e.target.password.value !== "") {
       await authModel
         .loginUser(formData)
@@ -19,15 +26,15 @@ function Login() {
               "userInfo",
               JSON.stringify(result?.data?.user)
             );
-            helper.toast("success", result?.data?.message)
+            helper.toast("success", result?.data?.message);
             navigate("/index");
           }
         })
         .catch((error) => {
-          helper.toast("error", error?.response?.data?.message)
+          helper.toast("error", error?.response?.data?.message);
           // console.log(error, "++++++++++++++++");
         });
-      } else {
+    } else {
       helper.toast("error", "Enter Email and passwords");
     }
   };
@@ -45,6 +52,7 @@ function Login() {
               type="text"
               className="p-1 rounded-lg my-1 outline-none"
               placeholder="Enter Email"
+              onChange={handleChange}
               name="email"
             />
           </div>
@@ -55,6 +63,7 @@ function Login() {
               className="p-1 rounded-lg my-1 border-none outline-none"
               placeholder="Enter Password"
               name="password"
+              onChange={handleChange}
             />
           </div>
           <div className="pt-3">

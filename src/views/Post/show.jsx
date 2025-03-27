@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import blogModel from "../../model/blog.model";
-import helper from "../../lib/helper";
 
 function Show() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState([]);
-
-
+  const navigate = useNavigate();
 
   const getBlogData = async () => {
     await blogModel

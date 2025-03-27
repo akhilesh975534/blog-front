@@ -10,7 +10,6 @@ const BaseUrl = process.env.REACT_APP_API_URL;
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
-  console.log(posts[0]);
   const navigate = useNavigate();
 
   const getBlogData = async () => {
